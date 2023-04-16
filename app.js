@@ -5,6 +5,8 @@ const signup = require('./routes/sign-up');
 const routes = require('./routes');
 const { auth } = require('./middlewares/auth');
 const setupMiddlewares = require('./middlewares');
+const errorHandler = require('./middlewares/errorHandler');
+const NotFoundApiError = require('./errors/NotFoundApiError');
 
 const app = express();
 const { PORT = 3001 } = process.env;
@@ -18,14 +20,10 @@ app.use(auth);
 app.use(routes);
 
 app.use('*', (req, res, next) => {
-  next(new NotFoundError('Страница не найдена'));
+  next(new NotFoundApiError('Страница не найдена'));
 });
 
-app.use((err, req, res, next) => {
-  const { statusCode = 500, message } = err;
-  res.status(statusCode).send({ message: statusCode === 500 ? 'На сервере произошла ошибка' : message });
-  next();
-});
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   // Если всё работает, консоль покажет, какой порт приложение слушает
