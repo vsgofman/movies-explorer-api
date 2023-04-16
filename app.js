@@ -4,12 +4,13 @@ const signin = require('./routes/sign-in');
 const signup = require('./routes/sign-up');
 const routes = require('./routes');
 const { auth } = require('./middlewares/auth');
+const setupMiddlewares = require('./middlewares');
 
 const app = express();
 const { PORT = 3001 } = process.env;
 
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
-app.use(express.json());
+setupMiddlewares(app);
 
 app.use(signin);
 app.use(signup);
