@@ -20,11 +20,12 @@ const createMovie = (req, res, next) => {
     year,
     description,
     image,
-    trailer,
+    trailerLink: trailer,
+    thumbnail,
+    owner: req.user._id,
+    movieId,
     nameRU,
     nameEN,
-    thumbnail,
-    movieId,
   }).then((movie) => res.status(200).send(movie))
     .catch((err) => {
       if (err.name === 'ValidationError') {

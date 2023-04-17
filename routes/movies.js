@@ -10,14 +10,8 @@ const {
 // GET /movies
 router.get('/', getSavedMovies);
 
-// # создаёт фильм с переданными в теле
-// # country, director, duration, year,
-// description, image, trailer, nameRU, nameEN и thumbnail, movieId
 // POST /movies
-router.post('/:movieId', celebrate({
-  params: Joi.object().keys({
-    movieId: Joi.string().length(24).hex().required(),
-  }),
+router.post('/', celebrate({
   body: Joi.object().keys({
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
@@ -26,6 +20,7 @@ router.post('/:movieId', celebrate({
     country: Joi.string().required(),
     director: Joi.string().required(),
     year: Joi.string().required(),
+    movieId: Joi.number().required(),
     image: Joi.string().required().pattern(UrlRegExp),
     thumbnail: Joi.string().required().pattern(UrlRegExp),
     trailer: Joi.string().required().pattern(UrlRegExp),
