@@ -1,6 +1,5 @@
 const router = require('express').Router();
-const { celebrate, Joi } = require('celebrate');
-const UrlRegExp = require('../utils/validateUrl');
+const { validateCreateMovie, validateDeleteMovie } = require('../utils/validation');
 const {
   getSavedMovies,
   createMovie,
@@ -11,28 +10,10 @@ const {
 router.get('/', getSavedMovies);
 
 // POST /movies
-router.post('/', celebrate({
-  body: Joi.object().keys({
-    nameRU: Joi.string().required(),
-    nameEN: Joi.string().required(),
-    duration: Joi.number().required(),
-    description: Joi.string().required(),
-    country: Joi.string().required(),
-    director: Joi.string().required(),
-    year: Joi.string().required(),
-    movieId: Joi.number().required(),
-    image: Joi.string().required().pattern(UrlRegExp),
-    thumbnail: Joi.string().required().pattern(UrlRegExp),
-    trailer: Joi.string().required().pattern(UrlRegExp),
-  }),
-}), createMovie);
+router.post('/', validateCreateMovie, createMovie);
 
 // # удаляет сохранённый фильм по id
 // DELETE /movies/_id
-router.delete('/:movieId', celebrate({
-  params: Joi.object().keys({
-    movieId: Joi.string().length(24).hex().required(),
-  }),
-}), deleteMovieById);
+router.delete('/:movieId', validateDeleteMovie, deleteMovieById);
 
 module.exports = router;
