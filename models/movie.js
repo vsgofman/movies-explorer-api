@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const UrlRegExp = require('../utils/validateUrl');
+const { ValidateUrlRegExp } = require('../utils/validation');
 
 const movieSchema = new mongoose.Schema(
   {
@@ -26,17 +26,17 @@ const movieSchema = new mongoose.Schema(
     image: {
       type: String,
       required: true,
-      validate: { validator: UrlRegExp, message: 'Введите валидную ссылку' },
+      validate: { validator: ValidateUrlRegExp, message: 'Введите валидную ссылку' },
     },
     trailerLink: {
       type: String,
       required: true,
-      validate: { validator: UrlRegExp, message: 'Введите валидную ссылку' },
+      validate: { validator: ValidateUrlRegExp, message: 'Введите валидную ссылку' },
     },
     thumbnail: {
       type: String,
       required: true,
-      validate: { validator: UrlRegExp, message: 'Введите валидную ссылку' },
+      validate: { validator: ValidateUrlRegExp, message: 'Введите валидную ссылку' },
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,

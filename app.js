@@ -1,4 +1,5 @@
 const express = require('express');
+const helmet = require('helmet');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const signin = require('./routes/sign-in');
@@ -11,6 +12,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const NotFoundApiError = require('./errors/NotFoundApiError');
 
 const app = express();
+app.use(helmet());
 const { PORT = 3001 } = process.env;
 
 mongoose.connect('mongodb://127.0.0.1:27017/moviedb');
