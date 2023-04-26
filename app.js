@@ -2,6 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
+const limiter = require('./middlewares/limiter');
 const signin = require('./routes/sign-in');
 const signup = require('./routes/sign-up');
 const routes = require('./routes');
@@ -12,14 +13,15 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const NotFoundApiError = require('./errors/NotFoundApiError');
 
 const app = express();
-app.use(helmet());
 const { PORT = 3001 } = process.env;
 
 mongoose.connect('mongodb://127.0.0.1:27017/moviedb');
 app.use(disablePoweredBy);
 app.use(express.json());
+app.use(helmet());
 
 app.use(requestLogger);
+app.use(limiter);
 app.use(signin);
 app.use(signup);
 app.use(auth);
