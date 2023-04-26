@@ -13,7 +13,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const NotFoundApiError = require('./errors/NotFoundApiError');
 
 const app = express();
-const { PORT = 3001 } = process.env;
+const { PORT = 3003 } = process.env;
 
 mongoose.connect('mongodb://127.0.0.1:27017/moviedb');
 app.use(disablePoweredBy);
@@ -36,6 +36,5 @@ app.use(errors());
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  // Если всё работает, консоль покажет, какой порт приложение слушает
   console.log(`App listening on port ${PORT}`);
 });
