@@ -4,8 +4,8 @@ const ValidateUrlRegExp = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+
 
 const validateUpdateProfile = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    email: Joi.string(),
+    name: Joi.string().min(2).max(30).required(),
+    email: Joi.string().email().required(),
   }),
 });
 
