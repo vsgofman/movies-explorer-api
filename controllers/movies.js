@@ -2,6 +2,13 @@ const Movie = require('../models/movie');
 const BadRequestApiError = require('../errors/BadRequestApiError');
 const NotFoundApiError = require('../errors/NotFoundApiError');
 const ForbiddenApiError = require('../errors/ForbiddenApiError');
+const {
+  badRequestCreateMovie,
+  notFoundDeleteMovie,
+  forbiddenDeleteMovie,
+  badRequestDeleteMovie,
+  successDeleteMovie,
+} = require('../utils/constants');
 
 // GET /movies
 const getSavedMovies = (req, res, next) => Movie.find({})
@@ -30,7 +37,7 @@ const createMovie = (req, res, next) => {
   }).then((movie) => res.status(200).send(movie))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestApiError('Переданы некорректные данные при создании карточки фильма'));
+        next(new BadRequestApiError(badRequestCreateMovie));
       } else {
         next(err);
       }
@@ -42,17 +49,17 @@ const deleteMovieById = (req, res, next) => {
   Movie.findOne({ _id: req.params.movieId })
     .then((movie) => {
       if (movie === null) {
-        throw new NotFoundApiError('Карточка фильма с указанным id не найдена');
+        throw new NotFoundApiError(notFoundDeleteMovie);
       }
       if (movie.owner.valueOf() !== req.user._id) {
-        throw new ForbiddenApiError('Вы можете удалить только добавленную вами карточку');
+        throw new ForbiddenApiError(forbiddenDeleteMovie);
       }
       return Movie.findByIdAndRemove(req.params.movieId)
-        .then(() => res.status(200).send({ message: 'Карточа фильма удалена' }))
+        .then(() => res.status(200).send({ message: successDeleteMovie }))
         .catch(next);
     }).catch((err) => {
       if (err.name === 'CastError') {
-        next(new BadRequestApiError('Переданы некорректные данные для удаления карточки фильма'));
+        next(new BadRequestApiError(badRequestDeleteMovie));
       } else {
         next(err);
       }

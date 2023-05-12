@@ -2,6 +2,10 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const BadRequestApiError = require('../errors/BadRequestApiError');
 const ConflictApiError = require('../errors/ConflictApiError');
+const {
+  badRequestCreateUser,
+  conflictCreateUser,
+} = require('../utils/constants');
 
 const register = (req, res, next) => {
   const {
@@ -15,10 +19,10 @@ const register = (req, res, next) => {
       name: user.name,
     })).catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestApiError('Переданы некорректные данные при создании пользователя'));
+        next(new BadRequestApiError(badRequestCreateUser));
       }
       if (err.code === 11000) {
-        next(new ConflictApiError('Пользователь с таким email уже существует'));
+        next(new ConflictApiError(conflictCreateUser));
       } next(err);
     });
 };
