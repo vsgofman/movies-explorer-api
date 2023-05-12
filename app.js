@@ -5,14 +5,10 @@ const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const cors = require('cors');
 const limiter = require('./middlewares/limiter');
-const signin = require('./routes/sign-in');
-const signup = require('./routes/sign-up');
 const routes = require('./routes');
-const { auth } = require('./middlewares/auth');
 const disablePoweredBy = require('./middlewares/disablePoweredBy');
 const errorHandler = require('./middlewares/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const NotFoundApiError = require('./errors/NotFoundApiError');
 
 const { DB_URL } = process.env;
 
@@ -27,14 +23,8 @@ app.use(helmet());
 
 app.use(requestLogger);
 app.use(limiter);
-app.use(signin);
-app.use(signup);
-app.use(auth);
-app.use(routes);
 
-app.use('*', (req, res, next) => {
-  next(new NotFoundApiError('Страница не найдена'));
-});
+app.use(routes);
 
 app.use(errorLogger);
 app.use(errors());

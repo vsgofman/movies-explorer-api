@@ -14,6 +14,8 @@ const badRequestUpdateUser = 'Передан некорректные данны
 const badRequestCreateUser = 'Переданы некорректные данные при создании пользователя';
 const conflictCreateUser = 'Пользователь с таким email уже существует';
 
+const notFoundPage = 'Страница не найдена';
+
 module.exports = {
   badRequestCreateMovie,
   notFoundDeleteMovie,
@@ -25,4 +27,5 @@ module.exports = {
   badRequestUpdateUser,
   badRequestCreateUser,
   conflictCreateUser,
+  notFoundPage,
 };
