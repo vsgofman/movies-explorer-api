@@ -1,12 +1,16 @@
 const { JWT_SECRET, NODE_ENV } = process.env;
 const jwt = require('jsonwebtoken');
 const UnauthorizedApiError = require('../errors/UnauthorizedApiError');
+const {
+  authorizationRequired,
+  invalidToken,
+} = require('../utils/constants');
 
 module.exports.auth = (req, res, next) => {
   const { authorization } = req.headers;
   if (!authorization || !authorization.startsWith('Bearer ')) {
     console.log('12, 11');
-    throw new UnauthorizedApiError('Необходима авторизация');
+    throw new UnauthorizedApiError(authorizationRequired);
   }
   const token = authorization.replace('Bearer ', '');
   let payload;
@@ -15,9 +19,9 @@ module.exports.auth = (req, res, next) => {
   } catch (err) {
     console.log('11, 12');
     if (err.name === 'JsonWebTokenError') {
-      throw new UnauthorizedApiError('Прислан некорректный токен');
+      throw new UnauthorizedApiError(invalidToken);
     }
-    throw new UnauthorizedApiError('Необходима авторизация');
+    throw new UnauthorizedApiError(authorizationRequired);
   }
   req.user = payload;
   return next();

@@ -1,10 +1,12 @@
 const User = require('../models/user');
 const BadRequestApiError = require('../errors/BadRequestApiError');
 const NotFoundApiError = require('../errors/NotFoundApiError');
+const ConflictApiError = require('../errors/ConflictApiError');
 const {
   notFoundUser,
   badRequestFindUser,
   badRequestUpdateUser,
+  conflictUpdateUser,
 } = require('../utils/constants');
 
 const getCurrentUser = (req, res, next) => {
@@ -45,6 +47,9 @@ const updateProfile = (req, res, next) => {
     }
     if (err.name === 'ValidationError') {
       next(new BadRequestApiError(badRequestUpdateUser));
+    }
+    if (err.code === 11000) {
+      next(new ConflictApiError(conflictUpdateUser));
     } next(err);
   });
 };

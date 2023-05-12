@@ -9,12 +9,18 @@ const successDeleteMovie = 'Карточа фильма удалена';
 const notFoundUser = 'Пользователь не найден';
 const badRequestFindUser = 'Передан некорректный id пользователя';
 const badRequestUpdateUser = 'Передан некорректные данные при обновлении профиля';
+const conflictUpdateUser = 'Данный email уже есть в базе';
 
 // controllers/register
 const badRequestCreateUser = 'Переданы некорректные данные при создании пользователя';
 const conflictCreateUser = 'Пользователь с таким email уже существует';
 
+// routes/index
 const notFoundPage = 'Страница не найдена';
+
+// middlewares/auth
+const authorizationRequired = 'Необходима авторизация';
+const invalidToken = 'Прислан некорректный токен';
 
 module.exports = {
   badRequestCreateMovie,
@@ -25,7 +31,10 @@ module.exports = {
   notFoundUser,
   badRequestFindUser,
   badRequestUpdateUser,
+  conflictUpdateUser,
   badRequestCreateUser,
   conflictCreateUser,
   notFoundPage,
+  authorizationRequired,
+  invalidToken,
 };
