@@ -15,7 +15,10 @@ const getCurrentUser = (req, res, next) => {
       if (user === null) {
         throw new NotFoundApiError(notFoundUser);
       }
-      res.status(200).send(user);
+      res.status(200).send({
+        email: user.email,
+        name: user.name,
+      });
     }).catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestApiError(badRequestFindUser));
