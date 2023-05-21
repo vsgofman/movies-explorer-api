@@ -15,6 +15,9 @@ const conflictUpdateUser = 'Данный email уже есть в базе';
 const badRequestCreateUser = 'Переданы некорректные данные при создании пользователя';
 const conflictCreateUser = 'Пользователь с таким email уже существует';
 
+// models/user
+const emailPasswordFalse = 'Неправильная почта или пароль';
+
 // routes/index
 const notFoundPage = 'Страница не найдена';
 
@@ -34,6 +37,7 @@ module.exports = {
   conflictUpdateUser,
   badRequestCreateUser,
   conflictCreateUser,
+  emailPasswordFalse,
   notFoundPage,
   authorizationRequired,
   invalidToken,

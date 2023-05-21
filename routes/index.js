@@ -5,7 +5,7 @@ const signupRoute = require('./sign-up');
 const signinRoute = require('./sign-in');
 const { auth } = require('../middlewares/auth');
 const NotFoundApiError = require('../errors/NotFoundApiError');
-const notFoundPage = require('../utils/constants');
+const { notFoundPage } = require('../utils/constants');
 
 router.use('/', signupRoute);
 router.use('/', signinRoute);
